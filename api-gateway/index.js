@@ -1,29 +1,25 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const axios = require("axios");
-require("dotenv").config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-const TAG_ANALYSIS_SERVICE_URL = process.env.TAG_ANALYSIS_SERVICE_URL;
+app.use(express.json());
 
-app.use(bodyParser.json());
+// Читаем переменные окружения
+const USE_PY_SERVICE = process.env.USE_PY_SERVICE === "true";
+const NODE_SERVICE_URL = process.env.NODE_SERVICE_URL || "http://tag-analysis-js-service:4001";
+const PY_SERVICE_URL = process.env.PY_ANALYSIS_SERVICE_URL || "http://tag-analysis-py-service:5001";
 
-// Маршрут для анализа тегов
+// Определяем, какой сервис использовать
+const SERVICE_URL = USE_PY_SERVICE ? PY_SERVICE_URL : NODE_SERVICE_URL;
+
 app.post("/match", async (req, res) => {
   const { userInterests, eventTags } = req.body;
 
-  if (!userInterests || !eventTags) {
-    return res.status(400).json({ error: "Please provide user interests and event tags." });
-  }
-
   try {
-    // Направляем запрос в сервис анализа тегов
-    const response = await axios.post(`${TAG_ANALYSIS_SERVICE_URL}/analyze`, {
+    const response = await axios.post(`${SERVICE_URL}/analyze`, {
       userInterests,
       eventTags,
     });
-
     res.json(response.data);
   } catch (error) {
     console.error("Error communicating with Tag Analysis Service:", error.message);
@@ -31,6 +27,8 @@ app.post("/match", async (req, res) => {
   }
 });
 
+const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
-  console.log(`API Gateway is running on port ${PORT}`);
+  console.log(`API Gateway running on port ${PORT}`);
 });

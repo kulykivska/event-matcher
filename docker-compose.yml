@@ -6,10 +6,22 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+  
     environment:
-      TAG_ANALYSIS_SERVICE_URL: http://tag-analysis-service:4001
+      USE_PY_SERVICE: "false" 
+      NODE_SERVICE_URL: http://tag-analysis-service:4001
+      PY_ANALYSIS_SERVICE_URL: http://py-service:5001
 
-  tag-analysis-service:
-    build: ./tag-analysis-service
+  tag-analysis-js-service:
+    build:
+      context: ./tag-analysis-service/js-services
+      dockerfile: Dockerfile
     ports:
-      - "4001:4001"
+    - "4002:4001"
+
+  tag-analysis-py-service:
+    build:
+      context: ./tag-analysis-service/py-services
+      dockerfile: Dockerfile
+    ports:
+    - "5001:5001"
