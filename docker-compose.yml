@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      TAG_ANALYSIS_SERVICE_URL: http://tag-analysis-service:4001
+
+  tag-analysis-service:
+    build: ./tag-analysis-service
+    ports:
+      - "4001:4001"

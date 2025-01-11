@@ -1,0 +1,62 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+*.eggs/
+.Python
+*.pytest_cache/
+.tox/
+
+# IDE/Editor
+.idea/
+.vscode/
+*.swp
+*~
+
+# Environment
+.env
+.venv/
+env/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+dist/
+build/
+*.out
+
+# Temporary files
+*.bak
+*.tmp
+*.temp
+
+# Dependencies
+package-lock.json
+yarn.lock
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Miscellaneous
+*.sqlite3
+*.sqlite
+coverage/
+*.cover
+*.pid
+*.seed
+*.orig
+*.rej
+
